@@ -216,7 +216,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="hidden" id="status" name="status" class="form-control" value="Sedang Proses">
+                        <input type="hidden" id="status" name="status" class="form-control" value="Mengajukan">
                     </div>
 
                     <div class="form-group">

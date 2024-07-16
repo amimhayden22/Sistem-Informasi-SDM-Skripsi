@@ -11,7 +11,9 @@ class Transaction extends Model
 
     protected $table = 'transactions';
     protected $fillable = [
-        'employee_id', 'leave_date', 'return_date', 'description', 'for', 'sub_permission', 'reason', 'status', 'ba_signature', 'manager_signature', 'applicant_signature', 'attachment', 'total_day'
+        'employee_id', 'leave_date', 'return_date', 'description', 'for',
+        'sub_permission', 'reason', 'status', 'ba_signature',
+        'manager_signature', 'applicant_signature', 'attachment', 'total_day'
     ];
 
     public function employee()
