@@ -103,7 +103,7 @@ Pengajuan Izin Kerja
 
                                             <!-- tombol sedang proses dan tidak disetujui khusus untuk staff baga -->
                                             @if($transaction->status === 'Mengajukan' )
-                                                @if(Auth::user()->employee->position->name === 'Business Admin and General Affair')
+                                                @if(Auth::user()->employee->position->name === 'Office Administrator')
                                                     <a href="" class="btn btn-success btn-sm"
                                                      data-toggle="tooltip" data-original-title="Menyetujui"
                                                      data-confirm-b="Apakah Anda Yakin? | Status pengajuan izin kerja dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan <b>diproses</b>?" data-confirm-yes-b="event.preventDefault(); document.getElementById('{{ $transaction->id }}').submit()">
