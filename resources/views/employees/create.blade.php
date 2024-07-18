@@ -283,7 +283,7 @@ Form Tambah Karyawan
 
                                     <div class="form-group">
                                         <label for="part_id" class="form-label">Bagian <span class="text-danger">*</span></label>
-                                        <select id="part_id" type="text" class="form-control @error('part_id') is-invalid @enderror partName" name="part_id" value="{{ old('part_id') }}" required autocomplete="part_id">
+                                        <select id="part_id" type="text" class="form-control @error('part_id') is-invalid @enderror partName select2" name="part_id" value="{{ old('part_id') }}" required autocomplete="part_id">
                                             <option value="" disabled selected>--- Pilih Bagian ---</option>
                                             @foreach ($parts as $part)
                                                 <option value="{{ $part->id }}" {{ old('part_id') == $part->id ? 'selected' : '' }}>{{$part->name}}</option>
@@ -302,8 +302,11 @@ Form Tambah Karyawan
                                         @endif
                                         <div class="form-group mt-4">
                                             <label for="position_id" class="form-label">Jabatan<span class="text-danger"> *</span></label>
-                                            <select class="form-control @error('position_id') is-invalid @enderror position_id" name="position_id" value="{{ old('position_id') }}" required autocomplete="position_id" id="position_id">
-                                                <option value="" disabled selected>--- Nama Jabatan ---</option>
+                                            <select class="form-control @error('position_id') is-invalid @enderror position_id select2" name="position_id" value="{{ old('position_id') }}" required autocomplete="position_id" id="position_id">
+                                                <option value="" disabled selected>--- Pilih Jabatan ---</option>
+                                                @foreach ($positions as $position)
+                                                    <option value="{{ $position->id }}" {{ old('position_id') == $position->id ? 'selected' : '' }}>{{$position->name}}</option>
+                                                @endforeach
                                             </select>
                                             @if (count($errors) > 0)
                                                 @error('position_id')
@@ -480,50 +483,14 @@ Form Tambah Karyawan
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js" integrity="sha512-Y/GIYsd+LaQm6bGysIClyez2HGCIN1yrs94wUrHoRAD5RSURkqqVQEU6mM51O90hqS80ABFTGtiDpSXd2O05nw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endsection
 @section('script')
-<script type="text/javascript">
-    $(document).ready(function(){
-        // Inisialisasi elemen-elemen yang sama
-        var selectElements = ['#religion', '#education', '#bank', '#part_id', '#position_id', '#marital_status'];
+<script>
+    // Inisialisasi elemen tanggal yang sama
+    var datepickerElements = ["#date_of_birth", "#start_contract", "#end_of_contract"];
 
-        // Menerapkan select2 pada semua elemen yang sama
-        selectElements.forEach(function(element) {
-            $(element).select2();
-        });
-
-        // Inisialisasi elemen tanggal yang sama
-        var datepickerElements = ["#date_of_birth", "#start_contract", "#end_of_contract"];
-
-        // Menerapkan datepicker pada semua elemen tanggal yang sama
-        datepickerElements.forEach(function(element) {
-            $(element).datepicker({
-                dateFormat: "yy-mm-dd"
-            });
-        });
-
-        var oldPositionId = @json(old('position_id'));
-
-        $(document).on('change', '.form-group .partName', function() {
-            var partId = $(this).val();
-            var div = $(this).parent();
-            var op = " ";
-
-            $.ajax({
-                type: "GET",
-                url: "{!!URL::to('dashboard/postions/json')!!}",
-                data: { 'id': partId },
-                success: function(getPosition) {
-                    op += '<option value="" selected disabled>--- Pilih Jabatan ---</option>';
-                    getPosition.forEach(function(position) {
-                        op += '<option value="' + position.id + '" ' + (oldPositionId == position.id ? 'selected' : '') + '>' + position.name + '</option>';
-                    });
-
-                    div.find('.position_id').html(" ");
-                    div.find('.position_id').append(op);
-                },
-                error: function() {
-                    alert('data tidak ditemukkan');
-                }
-            });
+    // Menerapkan datepicker pada semua elemen tanggal yang sama
+    datepickerElements.forEach(function(element) {
+        $(element).datepicker({
+            dateFormat: "yy-mm-dd"
         });
     });
 </script>

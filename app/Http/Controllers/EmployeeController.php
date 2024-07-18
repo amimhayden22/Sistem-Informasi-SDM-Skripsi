@@ -39,6 +39,7 @@ class EmployeeController extends Controller
     public function create()
     {
         $parts     = Part::all();
+        $positions = Position::all();
         $employee = DB::table('employees')->select(DB::raw('MAX(RIGHT(code,3)) as code'));
         $generateNumber="";
         if ($employee->count()>0) {
@@ -50,7 +51,7 @@ class EmployeeController extends Controller
             $generateNumber = "001"; // kode awal default
         }
 
-        return view('employees.create', compact('parts','generateNumber'));
+        return view('employees.create', compact('parts', 'positions', 'generateNumber'));
     }
 
     /**
@@ -66,7 +67,7 @@ class EmployeeController extends Controller
             'name'              => 'required|string',
             'place_of_birth'    => 'required|string',
             'date_of_birth'     => 'required|date',
-            'id_card_number'    => 'required|digits:16|numeric',
+            'id_card_number'    => 'required|numeric',
             'tax_number'        => 'required|numeric',
             'email'             => 'required|email',
             'address'           => 'required|string',
@@ -74,7 +75,7 @@ class EmployeeController extends Controller
             'religion'          => 'required|not_in:0',
             'education'         => 'required|not_in:0',
             'bank'              => 'required|string',
-            'account_number'    => 'required|numeric|digits_between:10,16',
+            'account_number'    => 'required|numeric',
             'position_id'       => 'required|integer',
             'part_id'           => 'required|integer',
             'start_contract'    => 'required|date',
@@ -133,6 +134,16 @@ class EmployeeController extends Controller
         // Membuat objek Employee dengan data yang sudah diinisialisasi
         $createEmployee = Employee::create($employeeData);
 
+        // Membuat objek User dengan data yang sudah diinisialisasi
+        $userData = [
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->id_card_number),
+            'role'      => 'karyawan',
+        ];
+
+        $createUser = User::create($userData);
+
         return redirect('/dashboard/employees')->with('success', 'Tambah data berhasil!');
     }
 
@@ -184,14 +195,14 @@ class EmployeeController extends Controller
             'name'              => 'required|string',
             'place_of_birth'    => 'required|string',
             'date_of_birth'     => 'required|date',
-            'id_card_number'    => 'required|digits:16|numeric',
+            'id_card_number'    => 'required|numeric',
             'email'             => 'required|email',
             'address'           => 'required|string',
             'phone'             => 'required|numeric',
             'religion'          => 'required|not_in:0',
             'education'         => 'required|not_in:0',
             'bank'              => 'required|string',
-            'account_number'    => 'required|numeric|digits_between:10,16',
+            'account_number'    => 'required|numeric',
             'position_id'       => 'required|integer',
             'part_id'           => 'required|integer',
             'start_contract'    => 'required|date',
