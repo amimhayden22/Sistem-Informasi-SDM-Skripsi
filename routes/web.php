@@ -32,15 +32,12 @@ Route::middleware(['auth', 'verified', 'checkstatus:Active'])->group(function ()
         Route::middleware(['checkrole:administrator,admin,manajer'])->group(function () {
             Route::resource('/parts', PartController::class);
             Route::resource('/positions', PositionController::class);
-            Route::post('/employees/send/information-account/{id}', [EmployeeController::class, 'sendEmail'])->name('employees.send-email');
-            Route::get('/employees/attendance/detail/by/{id}', [EmployeeController::class, 'checkEmployeeAttendance'])->name('employees.total-working-day');
             Route::resource('/employees', EmployeeController::class);
         });
         Route::middleware(['checkrole:administrator,admin,manajer,karyawan'])->group(function () {
             Route::get('/', [HomeController::class, 'index'])->name('dashboard');
             Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
             Route::get('/postions/json', [EmployeeController::class, 'findPosition'])->name('postions.data-json');
-            Route::get('/work-permit/print/pdf/{id}', [TransactionController::class, 'print'])->name('work-permit.print');
             Route::resource('/work-permit', TransactionController::class);
         });
     });

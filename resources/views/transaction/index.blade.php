@@ -101,95 +101,47 @@ Pengajuan Izin Kerja
                                         </td>
                                         <td>
 
-                                            <!-- tombol sedang proses dan tidak disetujui khusus untuk staff baga -->
-                                            @if($transaction->status === 'Mengajukan' )
-                                                @if(Auth::user()->employee->position->name === 'Office Administrator')
-                                                    <a href="" class="btn btn-success btn-sm"
-                                                     data-toggle="tooltip" data-original-title="Menyetujui"
-                                                     data-confirm-b="Apakah Anda Yakin? | Status pengajuan izin kerja dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan <b>diproses</b>?" data-confirm-yes-b="event.preventDefault(); document.getElementById('{{ $transaction->id }}').submit()">
-                                                    <i class="fas fa-check-circle" aria-hidden="true"></i></a>
-                                                    <form id="{{ $transaction->id }}" action="{{ route('work-permit.update', $transaction->id) }}" method="POST" style="display: none;">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <input type="hidden" name="employee_id" value="{{ $transaction->employee_id }}">
-                                                        <input type="hidden" name="leave_date" value="{{ $transaction->leave_date }}">
-                                                        <input type="hidden" name="return_date" value="{{ $transaction->return_date }}">
-                                                        <input type="hidden" name="description" value="{{ $transaction->description }}">
-                                                        <input type="hidden" name="status" value="{{ $transaction->employee->part->name === 'Direktur' ? 'Disetujui' : 'Sedang Proses' }}">
-                                                    </form>
+                                            @php
+                                                $employeePosition = Auth::user()->employee->position->name;
+                                                $employeePart = $transaction->employee->part->name;
+                                            @endphp
 
-                                                    <a href="#" class="btn btn-warning btn-sm btn-not-allowed {{ $transaction->status === 'Tidak Disetujui' ? 'disabled' : '' }}"
-                                                    data-id="{{ $transaction->id }}" data-name="{{ $transaction->employee->name }}"
-                                                    data-leave_date="{{ $transaction->leave_date }}" data-return_date="{{ $transaction->return_date }}"
-                                                    data-description="{{ $transaction->description }}"
-                                                    data-toggle="tooltip" data-original-title="Tidak Setuju">
-                                                    <i class="fas fa-times-circle" aria-hidden="true"></i>
-                                                    </a>
-                                                @endif
+                                            @if ($transaction->status === 'Mengajukan' && $employeePosition === 'Office Administrator')
+                                                <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-original-title="Menyetujui" data-confirm-b="Apakah Anda Yakin? | Status pengajuan izin kerja dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan <b>diproses</b>?" data-confirm-yes-b="event.preventDefault(); document.getElementById('{{ $transaction->id }}').submit()"><i class="fas fa-check-circle" aria-hidden="true"></i></a><form id="{{ $transaction->id }}" action="{{ route('work-permit.update', $transaction->id) }}" method="POST" style="display:none">@csrf @method('PUT') <input type="hidden" name="status" value="Sedang Proses"></form>
+                                                <a href="#" class="btn btn-warning btn-sm btn-not-allowed {{ $transaction->status === 'Tidak Disetujui' ? 'disabled' : '' }}" data-id="{{ $transaction->id }}" data-name="{{ $transaction->employee->name }}" data-toggle="tooltip" data-original-title="Tidak Setuju"><i class="fas fa-times-circle" aria-hidden="true"></i></a>
                                             @endif
 
-                                            {{-- tombol khusus direktur --}}
-                                            @if($transaction->status === 'Sedang Proses' )
-                                                @if(Auth::user()->employee->part->name === 'Direktur')
-                                                    @if($transaction->employee->part->name == 'General Affair' || $transaction->employee->part->name == 'Web Developer' || $transaction->employee->user->role === 'manajer' || $transaction->employee->part->name == 'Product Development')
-                                                        <a href="" class="btn btn-info btn-sm"
-                                                            data-toggle="tooltip" data-original-title="Setuju"
-                                                            data-confirm-b="Yakin? | Status pengajuan cuti dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan <b>disetujui</b>?" data-confirm-yes-b="event.preventDefault(); document.getElementById('{{ $transaction->id }}').submit()">
-                                                            <i class="fas fa-check-circle" aria-hidden="true"></i></a>
-                                                            <form id="{{ $transaction->id }}" action="{{ route('work-permit.update', $transaction->id) }}" method="POST" style="display: none;">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <input type="hidden" name="employee_id" value="{{ $transaction->employee_id }}">
-                                                                <input type="hidden" name="leave_date" value="{{ $transaction->leave_date }}">
-                                                                <input type="hidden" name="return_date" value="{{ $transaction->return_date }}">
-                                                                <input type="hidden" name="description" value="{{ $transaction->description }}">
-                                                                <input type="hidden" name="status" value="Disetujui">
-                                                            </form>
-
-                                                            <a href="#" class="btn btn-warning btn-sm btn-not-allowed {{ $transaction->status === 'Tidak Disetujui' ? 'disabled' : '' }} {{ $transaction->status === 'Disetujui' ? 'disabled' : '' }}"
-                                                            data-id="{{ $transaction->id }}" data-name="{{ $transaction->employee->name }}"
-                                                            data-leave_date="{{ $transaction->leave_date }}" data-return_date="{{ $transaction->return_date }}"
-                                                            data-description="{{ $transaction->description }}"
-                                                            data-toggle="tooltip" data-original-title="Tidak Setuju">
-                                                            <i class="fas fa-times-circle" aria-hidden="true"></i>
-                                                        </a>
+                                            @if ($transaction->status === 'Sedang Proses')
+                                                <!-- Divisi Product Development dan Manager -->
+                                                @if ($employeePosition === 'Chief Executive Officer' || $employeePosition === 'Product Development Manager')
+                                                    @if ($employeePart === 'Product Development')
+                                                        <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-original-title="Menyetujui" data-confirm-b="Apakah Anda Yakin? | Status pengajuan izin kerja dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan <b>diproses</b>?" data-confirm-yes-b="event.preventDefault(); document.getElementById('{{ $transaction->id }}').submit()"><i class="fas fa-check-circle" aria-hidden="true"></i></a><form id="{{ $transaction->id }}" action="{{ route('work-permit.update', $transaction->id) }}" method="POST" style="display:none">@csrf @method('PUT') <input type="hidden" name="status" value="Disetujui"></form>
+                                                        <a href="#" class="btn btn-warning btn-sm btn-not-allowed {{ $transaction->status === 'Tidak Disetujui' ? 'disabled' : '' }}" data-id="{{ $transaction->id }}" data-name="{{ $transaction->employee->name }}" data-toggle="tooltip" data-original-title="Tidak Setuju"><i class="fas fa-times-circle" aria-hidden="true"></i></a>
+                                                    @elseif ($transaction->employee->user->role === 'manajer')
+                                                        <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-original-title="Menyetujui" data-confirm-b="Apakah Anda Yakin? | Status pengajuan izin kerja dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan <b>diproses</b>?" data-confirm-yes-b="event.preventDefault(); document.getElementById('{{ $transaction->id }}').submit()"><i class="fas fa-check-circle" aria-hidden="true"></i></a><form id="{{ $transaction->id }}" action="{{ route('work-permit.update', $transaction->id) }}" method="POST" style="display:none">@csrf @method('PUT') <input type="hidden" name="status" value="Disetujui"></form>
+                                                        <a href="#" class="btn btn-warning btn-sm btn-not-allowed {{ $transaction->status === 'Tidak Disetujui' ? 'disabled' : '' }}" data-id="{{ $transaction->id }}" data-name="{{ $transaction->employee->name }}" data-toggle="tooltip" data-original-title="Tidak Setuju"><i class="fas fa-times-circle" aria-hidden="true"></i></a>
                                                     @endif
                                                 @endif
-                                            @endif
 
-                                            <!-- tombol disetujui khusus untuk manager -->
-                                            @if( $transaction->status === 'Sedang Proses' )
-                                                @if(Auth::user()->employee->part->name === 'Product Development' || Auth::user()->employee->part->name === 'Marketing and Partnerships' || Auth::user()->employee->part->name === 'Finance Accounting Tax')
-                                                    @if(Auth::user()->employee->position->name === 'Product Development Manager' || Auth::user()->employee->position->name === 'Marketing and Partnerships Manager' || Auth::user()->employee->position->name === 'Finance Accounting Tax Manager')
-                                                        @if ($transaction->employee->position->name != Auth::user()->employee->position->name)
-                                                            <a href="" class="btn btn-info btn-sm"
-                                                                data-toggle="tooltip" data-original-title="Setuju"
-                                                                data-confirm-b="Apakah Anda Yakin? | Status pengajuan izin kerja dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan <b>disetujui</b>?" data-confirm-yes-b="event.preventDefault(); document.getElementById('{{ $transaction->id }}').submit()">
-                                                                <i class="fas fa-check-circle" aria-hidden="true"></i></a>
-                                                                <form id="{{ $transaction->id }}" action="{{ route('work-permit.update', $transaction->id) }}" method="POST" style="display: none;">
-                                                                    @csrf
-                                                                    @method('PUT')
-                                                                    <input type="hidden" name="employee_id" value="{{ $transaction->employee_id }}">
-                                                                    <input type="hidden" name="leave_date" value="{{ $transaction->leave_date }}">
-                                                                    <input type="hidden" name="return_date" value="{{ $transaction->return_date }}">
-                                                                    <input type="hidden" name="description" value="{{ $transaction->description }}">
-                                                                    <input type="hidden" name="status" value="Disetujui">
-                                                                </form>
+                                                <!-- Divisi Marketing and Partnerships -->
+                                                @if ($employeePosition === 'Marketing and Partnerships Manager')
+                                                    @if ($employeePart === 'Marketing and Partnerships')
+                                                        <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-original-title="Menyetujui" data-confirm-b="Apakah Anda Yakin? | Status pengajuan izin kerja dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan <b>diproses</b>?" data-confirm-yes-b="event.preventDefault(); document.getElementById('{{ $transaction->id }}').submit()"><i class="fas fa-check-circle" aria-hidden="true"></i></a><form id="{{ $transaction->id }}" action="{{ route('work-permit.update', $transaction->id) }}" method="POST" style="display:none">@csrf @method('PUT') <input type="hidden" name="status" value="Disetujui"></form>
+                                                        <a href="#" class="btn btn-warning btn-sm btn-not-allowed {{ $transaction->status === 'Tidak Disetujui' ? 'disabled' : '' }}" data-id="{{ $transaction->id }}" data-name="{{ $transaction->employee->name }}" data-toggle="tooltip" data-original-title="Tidak Setuju"><i class="fas fa-times-circle" aria-hidden="true"></i></a>
+                                                    @endif
+                                                @endif
 
-                                                                <a href="#" class="btn btn-warning btn-sm btn-not-allowed {{ $transaction->status === 'Tidak Disetujui' ? 'disabled' : '' }} {{ $transaction->status === 'Disetujui' ? 'disabled' : '' }}"
-                                                                data-id="{{ $transaction->id }}" data-name="{{ $transaction->employee->name }}"
-                                                                data-leave_date="{{ $transaction->leave_date }}" data-return_date="{{ $transaction->return_date }}"
-                                                                data-description="{{ $transaction->description }}"
-                                                                data-toggle="tooltip" data-original-title="Tidak Setuju">
-                                                                <i class="fas fa-times-circle" aria-hidden="true"></i>
-                                                            </a>
-                                                       @endif
+                                                <!-- Divisi Finance Accounting Tax -->
+                                                @if ($employeePosition === 'Finance Accounting Tax Manager')
+                                                    @if ($employeePart === 'Finance Accounting Tax')
+                                                        <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-original-title="Menyetujui" data-confirm-b="Apakah Anda Yakin? | Status pengajuan izin kerja dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan <b>diproses</b>?" data-confirm-yes-b="event.preventDefault(); document.getElementById('{{ $transaction->id }}').submit()"><i class="fas fa-check-circle" aria-hidden="true"></i></a><form id="{{ $transaction->id }}" action="{{ route('work-permit.update', $transaction->id) }}" method="POST" style="display:none">@csrf @method('PUT') <input type="hidden" name="status" value="Disetujui"></form>
+                                                        <a href="#" class="btn btn-warning btn-sm btn-not-allowed {{ $transaction->status === 'Tidak Disetujui' ? 'disabled' : '' }}" data-id="{{ $transaction->id }}" data-name="{{ $transaction->employee->name }}" data-toggle="tooltip" data-original-title="Tidak Setuju"><i class="fas fa-times-circle" aria-hidden="true"></i></a>
                                                     @endif
                                                 @endif
                                             @endif
 
                                             <!-- tombol hapus khusus jabatan baga -->
-                                            @if(Auth::user()->employee->position->name === 'Business Admin and General Affair')
+                                            @if($employeePosition === 'Office Administrator')
                                                 <a href="" class="btn btn-danger btn-sm {{ $transaction->status === 'Disetujui' ? 'disabled' : '' }} {{ $transaction->status === 'Tidak Disetujui' ? 'disabled' : '' }}"
                                                 data-toggle="tooltip" data-original-title="Delete Data"
                                                 data-confirm="Apakah Anda Yakin? | Data pengajuan izin kerja dari karyawan bernama: <b>{{ $transaction->employee->name }}</b> akan dihapus?"

@@ -245,48 +245,6 @@ class TransactionController extends Controller
 
             Mail::to($email)->send(new NotificationRequestLeave($createTransaction, $for));
 
-            // Http::post('https://discord.com/api/webhooks/1044820887859376128/kEUaF9dz3puZ7vPEKabUeCEjAnCPR4Mg9csJADloq2sCu7ukfbILGQ1qOAsSHFESRqTn', [
-            //     'content' => 'Halo @everyone, Ada karyawan yang mengajukan Izin Kerja, silakan segera diproses! cc: '.$for,
-            //     'embeds' => [
-            //         [
-            //             'title' => '> Informasi Pengajuan Izin Kerja Karyawan',
-            //             'description' => 'Berikut adalah informasi karyawan yang akan melakukan Izin Kerja:',
-            //             'color' => '12845056',
-            //             'fields' => [
-            //                 [
-            //                     'name' => 'Nama',
-            //                     'value' => $createTransaction->employee->name
-            //                 ],
-            //                 [
-            //                     'name' => 'Pengambilan Izin Kerja',
-            //                     'value' => $createTransaction->leave_date
-            //                 ],
-            //                 [
-            //                     'name' => 'Tanggal Masuk Kembali',
-            //                     'value' => $createTransaction->return_date
-            //                 ],
-            //                 [
-            //                     'name' => 'Jenis Izin',
-            //                     'value' => $createTransaction->for
-            //                 ],
-            //                 [
-            //                     'name' => 'Alasan Izin Kerja',
-            //                     'value' => $createTransaction->description
-            //                 ]
-            //             ],
-            //             'author' => [
-            //                 'name' => 'Human Resource Information System - Sadasa Academy',
-            //                 'url' => 'https://hris.sadasa.id',
-            //                 'icon_url' => 'https://assets.sadasa.id/images/Logo-Round-01.png'
-            //             ],
-            //             'footer' => [
-            //                 'text' => 'By: Robot Website Sadasa Academy'
-            //             ],
-            //             'timestamp' => \Carbon\Carbon::now()
-            //         ]
-            //     ],
-            // ]);
-
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -339,9 +297,6 @@ class TransactionController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'leave_date'          => 'required|date',
-            'return_date'         => 'required|date',
-            'description'         => 'required|string',
         ]);
 
         $updateTransaction = Transaction::find($id);
@@ -349,9 +304,6 @@ class TransactionController extends Controller
             DB::beginTransaction();
 
             $updateTransaction->update([
-                'leave_date'          => $request->leave_date,
-                'return_date'         => $request->return_date,
-                'description'         => $request->description,
                 'reason'              => $request->reason,
                 'status'              => $request->status,
             ]);
@@ -405,48 +357,7 @@ class TransactionController extends Controller
 
                 Mail::to($email)->send(new NotificationRequestLeave($updateTransaction, $for));
 
-                // Http::post('https://discord.com/api/webhooks/1044820887859376128/kEUaF9dz3puZ7vPEKabUeCEjAnCPR4Mg9csJADloq2sCu7ukfbILGQ1qOAsSHFESRqTn', [
-                //     'content' => 'Halo @everyone, Ada karyawan yang mengajukan Izin Kerja, silakan segera diproses! cc: '.$for,
-                //     'embeds' => [
-                //         [
-                //             'title' => '> Informasi Pengajuan Izin Kerja Karyawan',
-                //             'description' => 'Berikut adalah informasi karyawan yang akan melakukan Izin Kerja:',
-                //             'color' => '12845056',
-                //             'fields' => [
-                //                 [
-                //                 'name' => 'Nama',
-                //                 'value' => $updateTransaction->employee->name
-                //                 ],
-                //                 [
-                //                 'name' => 'Pengambilan Izin Kerja',
-                //                 'value' => date('d F Y', strtotime($updateTransaction->leave_date))
-                //                 ],
-                //                 [
-                //                 'name' => 'Tanggal Masuk Kembali',
-                //                 'value' => date('d F Y', strtotime($updateTransaction->return_date))
-                //                 ],
-                //                 [
-                //                 'name' => 'Jenis Izin',
-                //                 'value' => $createTransaction->for
-                //                 ],
-                //                 [
-                //                 'name' => 'Alasan Izin Kerja',
-                //                 'value' => $updateTransaction->description
-                //                 ],
 
-                //             ],
-                //             'author' => [
-                //                 'name' => 'Human Resource Information System - Sadasa Academy',
-                //                 'url' => 'https://hris.sadasa.id',
-                //                 'icon_url' => 'https://assets.sadasa.id/images/Logo-Round-01.png'
-                //             ],
-                //             'footer' => [
-                //                 'text' => 'By: Robot Website Sadasa Academy'
-                //             ],
-                //             'timestamp' => \Carbon\Carbon::now()
-                //         ]
-                //     ],
-                // ]);
             }
             if ($updateTransaction->status === 'Tidak Disetujui'){
                 $checkStaff = Employee::where('email', $updateTransaction->employee->email)->first('email');
@@ -466,47 +377,6 @@ class TransactionController extends Controller
 
                 Mail::to($checkStaff)->send(new ApprovedLeave($updateTransaction));
 
-                // Http::post('https://discord.com/api/webhooks/1044555872577269820/rCeruwBE46tjALQDGbL3PuL7CBTomIrJEDX-taMqR1bq3Zv2kn7BmTIoDPmbsxAEyntw', [
-                //     'content' => 'Halo @everyone, Ada Pengumuman Ges!',
-                //     'embeds' => [
-                //         [
-                //             'title' => '> Informasi Pengajuan Izin Kerja Karyawan',
-                //             'description' => 'Berikut adalah informasi karyawan yang sedang melakukan Izin Kerja:',
-                //             'color' => '12845056',
-                //             'fields' => [
-                //                 [
-                //                 'name' => 'Nama',
-                //                 'value' => $updateTransaction->employee->name
-                //                 ],
-                //                 [
-                //                 'name' => 'Pengambilan Izin Kerja',
-                //                 'value' => date('d F Y', strtotime($updateTransaction->leave_date))
-                //                 ],
-                //                 [
-                //                 'name' => 'Tanggal Masuk Kembali',
-                //                 'value' => date('d F Y', strtotime($updateTransaction->return_date))
-                //                 ],
-                //                 [
-                //                     'name' => 'Jenis Izin',
-                //                     'value' => $updateTransaction->for
-                //                 ],
-                //                 [
-                //                 'name' => 'Alasan Izin Kerja',
-                //                 'value' => $updateTransaction->description
-                //                 ]
-                //             ],
-                //             'author' => [
-                //                 'name' => 'Human Resource Information System - Sadasa Academy',
-                //                 'url' => 'https://hris.sadasa.id',
-                //                 'icon_url' => 'https://assets.sadasa.id/images/Logo-Round-01.png'
-                //             ],
-                //             'footer' => [
-                //                 'text' => 'By: Robot Website Sadasa Academy'
-                //             ],
-                //             'timestamp' => \Carbon\Carbon::now()
-                //         ]
-                //     ],
-                // ]);
             }
 
             DB::commit();

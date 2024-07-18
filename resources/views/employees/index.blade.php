@@ -154,14 +154,6 @@ Manajemen Karyawan
                                             @csrf
                                             @method('delete')
                                         </form>
-                                        <a href="#" class="btn btn-info btn-sm {{ $employee->user_id ? 'disabled' : '' }}"
-                                            data-toggle="tooltip" data-original-title="Kirim Informasi Akun Karyawan"
-                                            onclick="event.preventDefault(); document.getElementById('send-email-{{ $employee->id }}').submit()">
-                                            <i class="fas fa-paper-plane"></i></a>
-                                            <form id="send-email-{{ $employee->id }}" action="{{ route('employees.send-email', $employee->id) }}" method="POST" style="display: none;">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $employee->id }}">
-                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
