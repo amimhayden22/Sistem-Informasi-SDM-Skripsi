@@ -20,7 +20,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        // $this->middleware(['auth','verified']);
     }
 
     /**
@@ -30,7 +30,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $employeeId = Auth::user()->employee->id;
+        $employeeId = 1;
 
         // Memeriksa total cuti karyawan
         $leaveTaken = Transaction::where('employee_id', $employeeId)

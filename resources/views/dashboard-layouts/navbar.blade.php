@@ -12,7 +12,7 @@
 		<li class="dropdown">
 			<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
 				<img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
-				<div class="d-sm-none d-lg-inline-block">Hai, {{ Auth::user()->name }}</div>
+				<div class="d-sm-none d-lg-inline-block">Hai, {{ optional(Auth::user())->name }}</div>
 			</a>
 			<div class="dropdown-menu dropdown-menu-right">
 				<a href="{{ route('user.profile') }}" class="dropdown-item has-icon">

@@ -21,7 +21,7 @@
           <div class="hero-inner">
             <h2>Human Resource Information System</h2>
             <p class="lead">
-                Halo, <strong style="font-weight: bold !important; text-transform: capitalize !important;">{{ Auth::user()->name }}</strong>.
+                Halo, <strong style="font-weight: bold !important; text-transform: capitalize !important;">{{ optional(Auth::user())->name }}</strong>.
                 <br>
                 Sistem informasi ini dapat digunakan untuk pengajuan izin kerja (izin, sakit, dan cuti), pengajuan Work from Home (WFH), dan perjalanan dinas.
             </p>
@@ -95,7 +95,7 @@
           </div>
         </div>
     </div>
-    @if (Auth::user()->role === 'administrator' || Auth::user()->role === 'manager')
+    {{-- @if (optional(Auth::user())->role === 'administrator' || optional(Auth::user())->role === 'manager') --}}
         <div class="row">
             <div class="col-lg-6 col-sm-12">
                 <div class="card">
@@ -154,7 +154,7 @@
                 </div>
             </div>
         </div>
-    @endif
+    {{-- @endif --}}
 </section>
 @endsection
 @section('script-libraies')

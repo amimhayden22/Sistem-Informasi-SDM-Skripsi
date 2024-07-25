@@ -1,37 +1,28 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="{{ route('dashboard') }}">
+        <a href="{{ route('dasbor') }}">
           <img class="img-fluid" src="{{ asset('assets/img/red-logo.png') }}" width="120" alt="Sadasa Red Logo">
       </a>
       </div>
       <div class="sidebar-brand sidebar-brand-sm">
-        <a href="{{ route('dashboard') }}">
+        <a href="{{ route('dasbor') }}">
           <img src="{{ asset('assets/img/logo-sadasa-circle.png') }}" alt="Logo Circle" width="50" class="img-fluid">
       </a>
       </div>
       <ul class="sidebar-menu">
-            @if (Auth::user()->role === 'administrator' || Auth::user()->role === 'admin' || Auth::user()->role === 'manajer' || Auth::user()->role === 'karyawan')
                 <li class="menu-header">Dasbor</li>
-                <li class="nav-item dropdown {{ (request()->is('dashboard')) ? 'active' : '' }}">
-                    <a href="{{ route('dashboard') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dasbor</span></a>
+                <li class="nav-item dropdown {{ (request()->is('dasbor')) ? 'active' : '' }}">
+                    <a href="{{ route('dasbor') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dasbor</span></a>
                 </li>
-            @endif
-
-            @if (Auth::user()->role === 'administrator' || Auth::user()->role === 'admin' || Auth::user()->employee->position->name === 'Finance Accounting Tax Manager')
                 <li class="menu-header">Master Data</li>
-                <li class="{{ (request()->is('dashboard/parts*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('parts.index') }}"><i class="fas fa-handshake"></i> <span>Bagian</span></a></li>
-                <li class="{{ (request()->is('dashboard/positions*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('positions.index') }}"><i class="fas fa-map-pin"></i> <span>Jabatan</span></a></li>
-                <li class="{{ (request()->is('dashboard/employees*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('employees.index') }}"><i class="fas fa-users"></i> <span>Karyawan</span></a></li>
-                @if (Auth::user()->role === 'administrator')
-                    <li class="{{ (request()->is('dashboard/users*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('users.index') }}"><i class="fas fa-user"></i> <span>Pengguna</span></a></li>
-                @endif
-            @endif
+                <li class="{{ (request()->is('dasbor/parts*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('parts.index') }}"><i class="fas fa-handshake"></i> <span>Bagian</span></a></li>
+                <li class="{{ (request()->is('dasbor/positions*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('positions.index') }}"><i class="fas fa-map-pin"></i> <span>Jabatan</span></a></li>
+                <li class="{{ (request()->is('dasbor/employees*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('employees.index') }}"><i class="fas fa-users"></i> <span>Karyawan</span></a></li>
+                    <li class="{{ (request()->is('dasbor/users*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('users.index') }}"><i class="fas fa-user"></i> <span>Pengguna</span></a></li>
 
-            @if (Auth::user()->role === 'administrator' || Auth::user()->role === 'admin' || Auth::user()->role === 'manajer' || Auth::user()->role === 'karyawan')
                 <li class="menu-header">Perizinan</li>
-                <li class="{{ (request()->is('dashboard/work-permit*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('work-permit.index') }}"><i class="fas fa-calendar-alt"></i> <span>Pengajuan Izin Kerja</span></a></li>
-            @endif
+                <li class="{{ (request()->is('dasbor/work-permit*')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('work-permit.index') }}"><i class="fas fa-calendar-alt"></i> <span>Pengajuan Izin Kerja</span></a></li>
         </ul>
 
         <div class=" mb-4 p-3 hide-sidebar-mini">

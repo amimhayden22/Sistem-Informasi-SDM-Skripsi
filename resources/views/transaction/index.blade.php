@@ -102,8 +102,8 @@ Pengajuan Izin Kerja
                                         <td>
 
                                             @php
-                                                $employeePosition = Auth::user()->employee->position->name;
-                                                $employeePart = $transaction->employee->part->name;
+                                                $employeePosition = 'Web Developer';
+                                                $employeePart = 'Product Development';
                                             @endphp
 
                                             @if ($transaction->status === 'Mengajukan' && $employeePosition === 'Office Administrator')

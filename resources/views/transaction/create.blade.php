@@ -69,7 +69,7 @@
                     @csrf
                     <div class="form-group">
                         <label class="form-label">Nama</label>
-                        <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ Auth::user()->employee->name }}" readonly>
+                        <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="Gus Khamim" readonly>
                         @if (count($errors) > 0)
                         @error('name')
                             <div class="invalid-feedback">
@@ -81,7 +81,7 @@
 
                     <div class="form-group">
                         <label class="form-label">Bagian</label>
-                        <input type="text" id="part" name="part" class="form-control @error('part') is-invalid @enderror" value="{{ Auth::user()->employee->part->name }}" readonly>
+                        <input type="text" id="part" name="part" class="form-control @error('part') is-invalid @enderror" value="Product Development" readonly>
                         @if (count($errors) > 0)
                         @error('part')
                             <div class="invalid-feedback">
@@ -93,7 +93,7 @@
 
                     <div class="form-group">
                         <label class="form-label">Jabatan</label>
-                        <input type="text" id="position" name="position" class="form-control @error('position') is-invalid @enderror" value="{{ Auth::user()->employee->position->name }}" readonly>
+                        <input type="text" id="position" name="position" class="form-control @error('position') is-invalid @enderror" value="Web Developer" readonly>
                         @if (count($errors) > 0)
                         @error('position')
                             <div class="invalid-feedback">

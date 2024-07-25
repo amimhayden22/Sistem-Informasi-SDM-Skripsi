@@ -61,7 +61,7 @@ Manajemen Pengguna
                   <td><a class="bg badge-pill badge-info text-white">{{ $item->role }}</a></td>
                   <td class="btn-group">
                     <a href="{{ route('users.edit', $item->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                    @if ( auth()->user()->role == 'administrator' )
+                    {{-- @if ( auth()->user()->role == 'administrator' ) --}}
                       {{-- Hapus Data --}}
                       <a href="#" class="btn btn-danger btn-sm"
                       data-toggle="tooltip"
@@ -73,7 +73,7 @@ Manajemen Pengguna
                       @csrf
                       @method('delete')
                     </form>
-                    @endif
+                    {{-- @endif --}}
                   </td>
                 </tr>
               @endforeach

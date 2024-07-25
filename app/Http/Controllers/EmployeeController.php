@@ -69,7 +69,7 @@ class EmployeeController extends Controller
             'date_of_birth'     => 'required|date',
             'id_card_number'    => 'required|numeric',
             'tax_number'        => 'required|numeric',
-            'email'             => 'required|email',
+            'email'             => 'required|email|unique:employees,email',
             'address'           => 'required|string',
             'phone'             => 'required|numeric',
             'religion'          => 'required|not_in:0',

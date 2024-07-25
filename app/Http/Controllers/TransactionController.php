@@ -18,7 +18,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $checkRole = Auth::user()->role;
+        $checkRole = 'admin';
 
         if($checkRole === 'karyawan'){
             $transactions = Transaction::with(['employee', 'employee.part', 'employee.position'])
@@ -70,6 +70,7 @@ class TransactionController extends Controller
     public function create()
     {
         $employees = Employee::all();
+        
         return view('transaction.create', compact('employees'));
     }
 

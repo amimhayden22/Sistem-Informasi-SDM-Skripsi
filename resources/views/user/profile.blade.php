@@ -16,7 +16,7 @@ Profil
         </div>
     </div>
     <div class="section-body">
-        <h2 class="section-title">Hai, {{ auth()->user()->name }}</h2>
+        <h2 class="section-title">Hai, Gus Khamim</h2>
         <p class="section-lead">
             Ubah informasi tentang diri Anda di halaman ini.
         </p>
@@ -30,7 +30,7 @@ Profil
                         </div>
                     </div>
                     <div class="profile-widget-description">
-                        <div class="profile-widget-name">{{ auth()->user()->name }} <div class="text-muted d-inline font-weight-normal"><br>{{ Auth::user()->employee->position->name }}</br></div></div>
+                        <div class="profile-widget-name">Gus Khamim <div class="text-muted d-inline font-weight-normal"><br>Web Developer</br></div></div>
                     </div>
                 </div>
             </div>
