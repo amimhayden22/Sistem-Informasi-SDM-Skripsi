@@ -21,15 +21,15 @@ Route::get('/', function () {
 Route::get('/form/employee', [EmployeeController::class, 'formCreateWithoutAuth'])->name('employees.new_employees')->withoutMiddleware(['auth']);
 Route::post('/form/employee', [EmployeeController::class, 'storeWithoutAuth'])->name('employees.storeWithoutAuth');
 
-Route::prefix('dasbor')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('dasbor');
-    Route::resource('/parts', PartController::class);
-    Route::resource('/positions', PositionController::class);
-    Route::resource('/employees', EmployeeController::class);
-    Route::resource('/users', UserController::class);
-    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
-    Route::resource('/work-permit', TransactionController::class);
-});
+// Route::prefix('dasbor')->group(function () {
+//     Route::get('/', [HomeController::class, 'index'])->name('dasbor');
+//     Route::resource('/parts', PartController::class);
+//     Route::resource('/positions', PositionController::class);
+//     Route::resource('/employees', EmployeeController::class);
+//     Route::resource('/users', UserController::class);
+//     Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+//     Route::resource('/work-permit', TransactionController::class);
+// });
 
 Auth::routes([
     'verify' => true,
