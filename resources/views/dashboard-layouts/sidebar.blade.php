@@ -1,7 +1,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="{{ route('dasbor') }}">
+        <a href="{{ route('dashboard') }}">
           <img class="img-fluid" src="{{ asset('assets/img/red-logo.png') }}" width="120" alt="Sadasa Red Logo">
       </a>
       </div>
