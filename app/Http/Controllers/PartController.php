@@ -7,6 +7,11 @@ use App\Models\Part;
 
 class PartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['checkrole:administrator,admin']);
+    }
+
     /**
      * Display a listing of the resource.
      *

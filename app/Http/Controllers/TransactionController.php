@@ -70,7 +70,7 @@ class TransactionController extends Controller
     public function create()
     {
         $employees = Employee::all();
-        
+
         return view('transaction.create', compact('employees'));
     }
 
@@ -159,90 +159,16 @@ class TransactionController extends Controller
                 ]);
             }
 
-            if (Auth::user()->employee->part->name === 'General Affair') {
-                $checkDirector = Employee::whereHas('position', function($query){
-                    $query->where('positions.name', 'Chief Executive Officer');
-                })->first();
+            $checkAdmin = Employee::whereHas('position', function($query){
+                $query->where('positions.name', 'Office Administrator');
+            })->first();
 
-                if(is_null($checkDirector)){
-                    return abort(404);
-                }
-
-                $email = $checkDirector->email;
-                $for = 'Direktur';
-            } else {
-                if (Auth::user()->employee->part->name === 'Marketing and Partnerships') {
-                    if (Auth::user()->employee->position->name === 'Marketing and Partnerships Manager') {
-                        $checkDirector = Employee::whereHas('position', function($query){
-                            $query->where('positions.name', 'Chief Executive Officer');
-                        })->first();
-
-                        if(is_null($checkDirector)){
-                            return abort(404);
-                        }
-
-                        $email = $checkDirector->email;
-                        $for = 'Direktur';
-                    }else{
-                        $checkManagerMP = Employee::whereHas('position', function($query){
-                            $query->where('positions.name', 'Marketing and Partnerships Manager');
-                        })->first();
-
-                        if(is_null($checkManagerMP)){
-                            return abort(404);
-                        }
-
-                        $email = $checkManagerMP->email;
-                        $for = 'Manager';
-                    }
-                }elseif(Auth::user()->employee->part->name === 'Product Development'){
-                    $checkDirector = Employee::whereHas('position', function($query){
-                        $query->where('positions.name', 'Chief Executive Officer');
-                    })->first();
-
-                    if(is_null($checkDirector)){
-                        return abort(404);
-                    }
-
-                    $email = $checkDirector->email;
-                    $for = 'Direktur';
-                }elseif(Auth::user()->employee->part->name === 'Finance Accounting Tax'){
-                    if (Auth::user()->employee->position->name === 'Finance Accounting Tax Manager') {
-                        $checkDirector = Employee::whereHas('position', function($query){
-                            $query->where('positions.name', 'Chief Executive Officer');
-                        })->first();
-
-                        if(is_null($checkDirector)){
-                            return abort(404);
-                        }
-
-                        $email = $checkDirector->email;
-                        $for = 'Direktur';
-                    }else{
-                        $checkManagerMP = Employee::whereHas('position', function($query){
-                            $query->where('positions.name', 'Finance Accounting Tax Manager');
-                        })->first();
-
-                        if(is_null($checkManagerMP)){
-                            return abort(404);
-                        }
-
-                        $email = $checkManagerMP->email;
-                        $for = 'Manager';
-                    }
-                }else{
-                    $checkBaGa = Employee::whereHas('position', function($query){
-                        $query->where('positions.name', 'Business Admin and General Affair');
-                    })->first();
-
-                    if(is_null($checkBaGa)){
-                        return abort(404);
-                    }
-
-                    $email = $checkBaGa->email;
-                    $for = 'Admin';
-                }
+            if(is_null($checkAdmin)){
+                return abort(404);
             }
+
+            $email = $checkAdmin->email;
+            $for = 'Office Administrator';
 
             Mail::to($email)->send(new NotificationRequestLeave($createTransaction, $for));
 

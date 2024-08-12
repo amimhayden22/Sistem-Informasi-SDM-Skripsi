@@ -21,6 +21,6 @@ class CheckRole
             return $next($request);
         }
         Auth::logout();
-        return redirect('login')->with('forbidden', 'Silakan hubungi administrator terlebih dahulu');
+        return redirect('login')->with('forbidden', 'Anda tidak memiliki akses untuk masuk ke halaman tersebut!');
     }
 }

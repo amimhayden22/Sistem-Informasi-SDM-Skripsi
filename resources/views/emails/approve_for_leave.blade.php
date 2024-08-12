@@ -24,13 +24,13 @@ Berikut kami sampaikan bahwa cuti Anda telah disetujui. Terlampir informasi rinc
 Untuk melihat lebih lanjut, silahkan klik tombol "<strong>Buka Website</strong>"<br>
 Terima Kasih.
 
-@component('mail::button', ['url' => 'https://hris.sadasa.id/dashboard/work-permit'])
+@component('mail::button', ['url' => 'https://hris.khamim.my.id/dashboard/work-permit'])
 Buka Website
 @endcomponent
 
 Best regards,<br>
 <strong>Sadasa Academy Team</strong> <br>
-Jalan Sagan GK. V No. 900, Terban Gondokusuman, Yogyakarta 55223 
+Jalan Sagan GK. V No. 900, Terban Gondokusuman, Yogyakarta 55223
 <br>
 085869289987 (WhatsApp) | info@sadasa.id | www.sadasa.id
 <br>

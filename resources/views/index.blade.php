@@ -95,7 +95,7 @@
           </div>
         </div>
     </div>
-    {{-- @if (optional(Auth::user())->role === 'administrator' || optional(Auth::user())->role === 'manager') --}}
+    @if (optional(Auth::user())->role === 'administrator' || optional(Auth::user())->role === 'manager' || optional(Auth::user())->role === 'admin')
         <div class="row">
             <div class="col-lg-6 col-sm-12">
                 <div class="card">
@@ -154,7 +154,7 @@
                 </div>
             </div>
         </div>
-    {{-- @endif --}}
+    @endif
 </section>
 @endsection
 @section('script-libraies')

@@ -152,7 +152,7 @@
 
                     <div class="form-group">
                         <label for="leave_date">Tanggal Izin Kerja <span class="text-danger"> *</span></label>
-                        <input type="date" id="leave_date" name="leave_date" class="form-control @error('leave_date') is-invalid @enderror" value="{{ old('leave_date') }}" required>
+                        <input type="date" id="leave_date" name="leave_date" min="{{ date('Y-m-d') }}" class="form-control @error('leave_date') is-invalid @enderror" value="{{ old('leave_date') }}" required>
                         @if (count($errors) > 0)
                         @error('leave_date')
                             <div class="invalid-feedback">

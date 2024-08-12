@@ -38,19 +38,15 @@ Auth::routes([
 
 Route::middleware(['auth', 'verified', 'checkstatus:Active'])->group(function () {
     Route::prefix('dashboard')->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+        Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+        Route::resource('/parts', PartController::class);
+        Route::resource('/positions', PositionController::class);
+        Route::get('/postions/json', [EmployeeController::class, 'findPosition'])->name('postions.data-json');
+        Route::resource('/employees', EmployeeController::class);
+        Route::resource('/work-permit', TransactionController::class);
         Route::resource('/users', UserController::class);
-        Route::middleware(['checkrole:administrator,admin,manajer'])->group(function () {
-            Route::resource('/parts', PartController::class);
-            Route::resource('/positions', PositionController::class);
-            Route::resource('/employees', EmployeeController::class);
-        });
-        Route::middleware(['checkrole:administrator,admin,manajer,karyawan'])->group(function () {
-            Route::resource('/work-permit', TransactionController::class);
-            Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-            Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
-            Route::get('/postions/json', [EmployeeController::class, 'findPosition'])->name('postions.data-json');
-            Route::resource('/work-permit', TransactionController::class);
-        });
+
     });
 });
 

@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware(['checkrole:administrator'])->except(['update', 'profile']);
+        $this->middleware(['checkrole:administrator,admin'])->except(['update', 'profile']);
     }
 
     /**
@@ -167,7 +167,7 @@ class UserController extends Controller
 
     public function profile()
     {
-        $user = User::with('employee')->find(5);
+        $user = User::with('employee')->find(Auth::user()->id);
 
         return view('user.profile', compact('user'));
     }
