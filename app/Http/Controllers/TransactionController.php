@@ -237,7 +237,7 @@ class TransactionController extends Controller
 
             if ($updateTransaction->status === 'Sedang Proses') {
 
-                if ($updateTransaction->employee->part->name === 'Web Developer' || $updateTransaction->employee->part->name === 'General Affair'){
+                if ($updateTransaction->employee->part->name === 'Web Developer' || $updateTransaction->employee->part->name === 'General Affair' || $updateTransaction->employee->part->name === 'IT'){
                     $checkDirector = Employee::whereHas('position', function($query){
                         $query->where('positions.name', 'Chief Executive Officer');
                     })->first();

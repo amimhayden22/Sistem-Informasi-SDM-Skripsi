@@ -305,7 +305,7 @@ Form Tambah Karyawan
                                             <select class="form-control @error('position_id') is-invalid @enderror position_id select2" name="position_id" value="{{ old('position_id') }}" required autocomplete="position_id" id="position_id">
                                                 <option value="" disabled selected>--- Pilih Jabatan ---</option>
                                                 @foreach ($positions as $position)
-                                                    <option value="{{ $position->id }}" {{ old('position_id') == $position->id ? 'selected' : '' }}>{{$position->name}}</option>
+                                                    <option value="{{ $position->id }}" {{ old('position_id') == $position->id ? 'selected' : '' }}>{{$position->name}} ({{ $position->part->name }})</option>
                                                 @endforeach
                                             </select>
                                             @if (count($errors) > 0)
@@ -486,6 +486,24 @@ Form Tambah Karyawan
 <script>
     // Inisialisasi elemen tanggal yang sama
     var datepickerElements = ["#date_of_birth", "#start_contract", "#end_of_contract"];
+
+    // Menerapkan select2 pada elemen part_id
+    $(".partName").select2({
+        placeholder: "Pilih Bagian",
+        allowClear: true
+    });
+
+    // Menerapkan select2 pada elemen position_id
+    $(".position_id").select2({
+        placeholder: "Pilih Jabatan",
+        allowClear: true
+    });
+
+    $("#bank").select2()
+    $("#religion").select2()
+    $("#education").select2()
+    $("#marital_status").select2()
+    
 
     // Menerapkan datepicker pada semua elemen tanggal yang sama
     datepickerElements.forEach(function(element) {
