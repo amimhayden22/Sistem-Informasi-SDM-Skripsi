@@ -137,7 +137,6 @@ class EmployeeController extends Controller
         }
 
         // Membuat objek Employee dengan data yang sudah diinisialisasi
-        $createEmployee = Employee::create($employeeData);
 
         // Membuat objek User dengan data yang sudah diinisialisasi
         $userData = [
@@ -146,8 +145,10 @@ class EmployeeController extends Controller
             'password'  => Hash::make($request->id_card_number),
             'role'      => 'karyawan',
         ];
-
         $createUser = User::create($userData);
+        
+        $employeeData['user_id'] = $createUser->id;
+        $createEmployee = Employee::create($employeeData);
 
         return redirect('/dashboard/employees')->with('success', 'Tambah data berhasil!');
     }
