@@ -194,7 +194,7 @@ Form Tambah Karyawan
 
                                     <div class="form-group">
                                         <label for="religion" class="form-label">Agama <span class="text-danger">*</span></label>
-                                        <select id="religion" type="text" class="form-control @error('religion') is-invalid @enderror" name="religion" value="{{ old('religion') }}" required autocomplete="religion">
+                                        <select id="religion" class="form-control @error('religion') is-invalid @enderror select2" name="religion" value="{{ old('religion') }}" required autocomplete="religion">
                                             <option value="" disabled selected>--- Pilih Agama ---</option>
                                             <option value="Islam" {{ old('religion') == 'Islam' ? 'selected' : '' }}>Islam</option>
                                             <option value="Kristen Protestan" {{ old('religion') == 'Kristen Protestan' ? 'selected' : '' }}>Kristen Protestan</option>
@@ -219,7 +219,7 @@ Form Tambah Karyawan
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="education" class="form-label">Pendidikan <span class="text-danger">*</span></label>
-                                        <select id="education" type="text" class="form-control @error('education') is-invalid @enderror" name="education" value="{{ old('education') }}" required autocomplete="education">
+                                        <select id="education" class="form-control @error('education') is-invalid @enderror select2" name="education" value="{{ old('education') }}" required autocomplete="education">
                                             <option value="" disabled selected>--- Pilih Pendidikan ---</option>
                                             <option value="SMA" {{ old('education') == 'SMA' ? 'selected' : '' }}>SMA</option>
                                             <option value="SMK" {{ old('education') == 'SMK' ? 'selected' : '' }}>SMK</option>
@@ -244,7 +244,7 @@ Form Tambah Karyawan
 
                                     <div class="form-group">
                                         <label for="bank">Nama Bank <span class="text-danger">*</span></label>
-                                        <select id="bank" type="text" class="form-control @error('bank') is-invalid @enderror" name="bank" required autocomplete="bank">
+                                        <select id="bank" class="form-control @error('bank') is-invalid @enderror select2" name="bank" required autocomplete="bank">
                                             <option value="" disabled selected>--- Pilih Bank ---</option>
                                             <option value="BCA" {{ old('bank') == 'BCA' ? 'selected' : '' }}>BCA</option>
                                             <option value="BRI" {{ old('bank') == 'BRI' ? 'selected' : '' }}>BRI</option>
@@ -356,7 +356,7 @@ Form Tambah Karyawan
 
                                     <div class="form-group">
                                         <label for="marital_status">Status Perkawinan <span class="text-danger">*</span></label>
-                                        <select id="marital_status" type="text" class="form-control @error('marital_status') is-invalid @enderror" name="marital_status" required autocomplete="marital_status">
+                                        <select id="marital_status" class="form-control @error('marital_status') is-invalid @enderror select2" name="marital_status" required autocomplete="marital_status">
                                             <option value="" disabled selected>--- Pilih Status ---</option>
                                             <option value="Lajang" {{ old('marital_status') == 'Lajang' ? 'selected' : '' }}>Lajang</option>
                                             <option value="Menikah" {{ old('marital_status') == 'Menikah' ? 'selected' : '' }}>Menikah</option>
@@ -486,24 +486,6 @@ Form Tambah Karyawan
 <script>
     // Inisialisasi elemen tanggal yang sama
     var datepickerElements = ["#date_of_birth", "#start_contract", "#end_of_contract"];
-
-    // Menerapkan select2 pada elemen part_id
-    $(".partName").select2({
-        placeholder: "Pilih Bagian",
-        allowClear: true
-    });
-
-    // Menerapkan select2 pada elemen position_id
-    $(".position_id").select2({
-        placeholder: "Pilih Jabatan",
-        allowClear: true
-    });
-
-    $("#bank").select2()
-    $("#religion").select2()
-    $("#education").select2()
-    $("#marital_status").select2()
-    
 
     // Menerapkan datepicker pada semua elemen tanggal yang sama
     datepickerElements.forEach(function(element) {
